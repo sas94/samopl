@@ -27,7 +27,7 @@ module "test-asg" {
   image_id              = var.image_id ##need to check
   security_groups       = var.security_groups
   key_name              = var.key_name
-  iam_instance_profile  = try(var.iam_instance_profile,aws_iam_instance_profile.ecs-ec2-role.id)
+  iam_instance_profile  = coalesce(var.iam_instance_profile,aws_iam_instance_profile.ecs-ec2-role.id)
   userdata              = data.template_file.user_data.rendered
   environment           = var.environment
   project               = var.project
@@ -72,7 +72,7 @@ module "spa-td" {
   source               = "../Modules/ecs-task-definition"
   container_definition = each.value.container_configuration
   family               = "${var.project}-${var.environment_short}-${each.key}-td"
-  task_role_arn        = try(var.task_role_arn,aws_iam_role.service-spa.arn)
+  task_role_arn        = coalesce(var.task_role_arn,aws_iam_role.service-spa.arn)
   project              = var.project
   # service              = var.service
   environment_short    = var.environment_short
