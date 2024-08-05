@@ -52,11 +52,11 @@ variable "common_environment_vars" {
 
 variable "iam_instance_profile" {
   type = string
-  default = ""
+  default = null
 }
 variable "task_role_arn" {
   type = string
-  default = ""
+  default = null
 }
 # variable "execution_role_arn" {
 #   type = string
